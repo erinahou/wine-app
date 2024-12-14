@@ -1,0 +1,63 @@
+/*
+* --------------------------------------------------
+* Global variables for Wine A Day
+* --------------------------------------------------
+*/
+
+:root {
+  --red-wine: radial-gradient(50% 50% at 50% 50%, #D1A6E6 0%, #FFD8BF 51%, rgba(255, 216, 191, 0.00) 96%);
+  --white-wine: radial-gradient(50% 50% at 50% 50%, #C7E6A6 0%, #EFFF89 51%, rgba(236, 255, 95, 0.00) 96%);
+}
+
+/*
+* --------------------------------------------------
+* croutes/_index
+* --------------------------------------------------
+*/
+.wine-cellar--container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/*
+* --------------------------------------------------
+* components/WineBottle
+* --------------------------------------------------
+*/
+
+.wine-bottle{
+  display: flex;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background: var(--red-wine);
+}
+
+.wine-bottle--stock{
+  display: flex;
+  width: 50%;
+  align-items: center;
+  padding-left: 1.5rem;
+}
+
+
+.wine-bottle--name{
+  width: 50%;
+}
+
+.wine-bottle:hover {
+  filter: blur(4px);
+}
+
+/*
+* --------------------------------------------------
+* components/WineDescLineItem
+* --------------------------------------------------
+*/
+
+.wine-desc-line-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0 1.5rem 0;
+  border-bottom: 1px solid black;
+}
