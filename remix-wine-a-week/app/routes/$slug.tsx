@@ -48,6 +48,10 @@ export default function WineDetailPage() {
     return year
   }
 
+  function backgroundColorOfDrawer(wine) {
+    return wine.variety.type === 'Red' ? 'var(--red-wine)' : 'var(--white-wine)'
+  }
+
 
   return (
     <Dialog open={open} onClose={setOpen} className="relative z-10">
@@ -77,15 +81,26 @@ export default function WineDetailPage() {
                   </Link>
                 </div>
               </TransitionChild>
-              <div className="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl">
+              <div
+                className="flex h-full flex-col overflow-y-scroll p-16 shadow-xl"
+                style={{
+                  background: backgroundColorOfDrawer(wine),
+                  backgroundColor: "white"
+                }}
+              >
                 {/* <div className="px-4 sm:px-6">
                   <DialogTitle className="text-base font-semibold text-gray-900">
                     {wine.name ? wine.name : "No name"}
                   </DialogTitle>
                 </div> */}
-                <h1>{wine.name ? wine.name : "No name"}</h1>
-                <WineBottle />
-                <div className="wine-detail relative mt-6 flex-1 px-4 sm:px-6">
+                <div
+                  className="flex"
+                >
+                  <h1>
+                    {wine.name ? wine.name : "No name"}
+                  </h1>
+                </div>
+                <div className="wine-detail--description relative flex-1">
                   <WineDescLineItem
                     label="Producer"
                     value={wine.producer.name ? wine.producer.name : "No producer specified"}
