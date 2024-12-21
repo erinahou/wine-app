@@ -11,11 +11,13 @@ import type { LinksFunction } from "@remix-run/node";
 import { SanityDocument } from "@sanity/client";
 import { client } from "src/sanity/client";
 
-import Header from "./components/Header"
+import Header from "./components/Header";
 import WineBottle from "~/components/WineBottle";
+import WineFilters from "~/components/WineFilters";
 
 import './styles/shared.css';
 import "./tailwind.css";
+import { useState } from "react";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: "./tailwind.css" },
@@ -35,6 +37,12 @@ const WINES_QUERY = `
     variety->{
       name,
       type
+    },
+    region -> {
+      region,
+      country -> {
+        country
+      }
     },
     slug {
       current
@@ -68,25 +76,55 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   const { wines } = useLoaderData<typeof loader>();
+  const [filteredWines, setFilteredWines] = useState(wines);
+
+  function filterWines(filters) {
+    let result = [...wines];
+
+    console.log(result)
+
+    if (filters.type) {
+      result = result.filter(
+        wine => wine.variety.type === filters.type
+      )
+    }
+    if (filters.country) {
+      result = result.filter(
+        wine => wine.region.country.country === filters.country
+      )
+    }
+    if (filters.stock !== undefined) {
+      result = result.filter(
+        wine => wine.stock === filters.stock
+      )
+    }
+
+    setFilteredWines(result)
+  }
+
+  function renderWineList(wineList: typeof wines) {
+    return wineList.map(wine => (
+      <NavLink
+        key={wine.slug.current}
+        to={`${wine.slug.current}`}
+        prefetch="intent"
+      >
+        <WineBottle
+          name={wine.name}
+          stock={wine.stock}
+          variety={wine.variety.type}
+        />
+      </NavLink>
+    ))
+  }
+
 
   return (
     <>
       <main className="container mx-auto min-h-screen max-w-5xl p-8">
+        <WineFilters filterFunction={filterWines} />
         <div className="wine-cellar--container">
-          {
-            wines.map(wine => (
-              <NavLink
-                to={`${wine.slug.current}`}
-                prefetch="intent" // Prefetch data when the link is hovered or in view
-              >
-                <WineBottle
-                  name={wine.name}
-                  stock={wine.stock}
-                  variety={wine.variety.type}
-                />
-              </NavLink>
-            ))
-          }
+          {renderWineList(filteredWines)}
         </div>
       </main>
       <Outlet />
