@@ -16,6 +16,10 @@ export const STOCK_STATUS = {
 export default function WineFilters(props) {
   const filterConfigs = [
     {
+      label: 'All',
+      filter: {type: null}
+    },
+    {
       label: 'Red',
       filter: {type: WINE_TYPES.RED}
     },
@@ -24,35 +28,32 @@ export default function WineFilters(props) {
       filter: {type: WINE_TYPES.WHITE}
     },
     {
-      label: 'All',
-      filter: {type: null}
-    },
-    {
       label: 'France',
       filter: {country: COUNTRIES.FRANCE}
     },
     {
       label: 'Australia',
       filter: {country: COUNTRIES.AUSTRALIA}
-    },
-    {
-      label: 'In Stock',
-      filter: {stock: STOCK_STATUS.IN_STOCK}
-    },
-    {
-      label: 'Out of Stock',
-      filter: {stock: STOCK_STATUS.OUT_OF_STOCK}
     }
   ];
 
   return(
-    filterConfigs.map((config,index) => (
+    <div className="wine-filters">
+      {
+        filterConfigs.map((config,index) => (
+          <button
+            key={index}
+            onClick={() => props.onFilter(config.filter)}
+          >
+            {config.label}
+          </button>
+        ))
+      }
       <button
-        key={index}
-        onClick={() => props.filterFunction(config.filter)}
+        onClick={props.onClear}
       >
-        {config.label}
+        Clear
       </button>
-    ))
+    </div>
   )
 }

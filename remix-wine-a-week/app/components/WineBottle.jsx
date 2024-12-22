@@ -3,15 +3,15 @@ export default function WineBottle(props) {
     <>
       <div
         key={props.name}
-        className="text-xs wine-bottle"
+        className="wine-bottle text-xs"
         style={{
           background: props.variety === "White" ? "var(--white-wine)" : "var(--red-wine)"
         }}
       >
-        <div className="wine-bottle--stock">
+        <div className="stock">
           <p>{props.stock}</p>
         </div>
-        <div className="wine-bottle--name">
+        <div className="name">
           <p>{props.name}</p>
         </div>
       </div>

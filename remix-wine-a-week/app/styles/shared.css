@@ -25,15 +25,61 @@ p {
 
 /*
 * --------------------------------------------------
-* croutes/_index
+* components/Header
 * --------------------------------------------------
 */
-.wine-cellar--container {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+
+.header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 1rem 2rem 0 2rem;
 }
 
 /*
+* --------------------------------------------------
+* root.tsx
+* --------------------------------------------------
+*/
+
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0 2rem 2rem 2rem;
+}
+
+.wine-cellar {
+  display: grid;
+  width: 100%;
+  max-width: 1100px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+
+  /* For wider screens */
+  @media (min-width: 840px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+/*
+* --------------------------------------------------
+* components/WineFilters
+* --------------------------------------------------
+*/
+
+.wine-filters {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  height: 100vh;
+  gap: 1rem;
+}
+/*
+
 * --------------------------------------------------
 * components/WineBottle
 * --------------------------------------------------
@@ -45,9 +91,10 @@ p {
   aspect-ratio: 1 / 1;
   border-radius: 50%;
   background: var(--red-wine);
+  /* margin: 0 auto; */
 }
 
-.wine-bottle--stock{
+.wine-bottle .stock{
   display: flex;
   width: 50%;
   align-items: center;
@@ -55,7 +102,7 @@ p {
 }
 
 
-.wine-bottle--name{
+.wine-bottle .name{
   width: 50%;
 }
 

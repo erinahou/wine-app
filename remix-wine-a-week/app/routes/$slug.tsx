@@ -9,7 +9,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 //Local components
 import WineDescLineItem from '../components/WineDescLineItem'
 import WineBottle from '../components/WineBottle';
-
+import renderWineList from '../components/WineList';
 
 const WINE_QUERY = `
 *[_type == "wine" && slug.current == $slug][0]{

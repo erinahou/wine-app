@@ -12,8 +12,8 @@ import { SanityDocument } from "@sanity/client";
 import { client } from "src/sanity/client";
 
 import Header from "./components/Header";
-import WineBottle from "~/components/WineBottle";
 import WineFilters from "~/components/WineFilters";
+import WineList from "~/components/WineList";
 
 import './styles/shared.css';
 import "./tailwind.css";
@@ -76,55 +76,38 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   const { wines } = useLoaderData<typeof loader>();
-  const [filteredWines, setFilteredWines] = useState(wines);
+  const [filters, setFilters] = useState({
+    type: null,
+    country: null
+  });
 
-  function filterWines(filters) {
-    let result = [...wines];
+  const filteredWines = wines.filter(wine => {
+    return (!filters.type || wine.variety.type === filters.type) &&
+    (!filters.country || wine.region.country.country === filters.country)
+  })
 
-    console.log(result)
-
-    if (filters.type) {
-      result = result.filter(
-        wine => wine.variety.type === filters.type
-      )
-    }
-    if (filters.country) {
-      result = result.filter(
-        wine => wine.region.country.country === filters.country
-      )
-    }
-    if (filters.stock !== undefined) {
-      result = result.filter(
-        wine => wine.stock === filters.stock
-      )
-    }
-
-    setFilteredWines(result)
+  function handleFilter(newFilter) {
+    setFilters(prev => {
+      return {
+        ...prev,
+        ...newFilter
+      }
+    })
   }
 
-  function renderWineList(wineList: typeof wines) {
-    return wineList.map(wine => (
-      <NavLink
-        key={wine.slug.current}
-        to={`${wine.slug.current}`}
-        prefetch="intent"
-      >
-        <WineBottle
-          name={wine.name}
-          stock={wine.stock}
-          variety={wine.variety.type}
-        />
-      </NavLink>
-    ))
+  function clearFilters() {
+    setFilters({
+      type: null,
+      country: null,
+    })
   }
-
 
   return (
     <>
-      <main className="container mx-auto min-h-screen max-w-5xl p-8">
-        <WineFilters filterFunction={filterWines} />
-        <div className="wine-cellar--container">
-          {renderWineList(filteredWines)}
+      <main className="main-container">
+        <WineFilters onFilter={handleFilter} onClear={clearFilters} />
+        <div className="wine-cellar">
+          {WineList(filteredWines)}
         </div>
       </main>
       <Outlet />
