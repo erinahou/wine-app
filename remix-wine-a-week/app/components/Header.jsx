@@ -6,7 +6,7 @@ export default function Header(wines) {
       <Link
         to="/"
       >
-        My cellar
+        Le Cave Morgan
       </Link>
       {/* <NavLink to="wines">Wines</NavLink> */}
     </nav>

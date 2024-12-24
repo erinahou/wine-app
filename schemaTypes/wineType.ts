@@ -21,12 +21,25 @@ export const wineType = defineType({
       },
       validation: (e) => e.required(),
     }),
+    // defineField({
+    //   type: "reference",
+    //   name: "variety",
+    //   title: "Grape variety",
+    //   to: [{ type: "grapeVariety" }],
+    //   validation: (e) => e.required(),
+    // }),
     defineField({
-      type: "reference",
-      name: "variety",
-      title: "Grape variety",
-      to: [{ type: "grapeVariety" }],
+      type: "array",
+      name: "varieties", // Changed name to reflect multiple values
+      title: "Grape varieties",
+      of: [{
+        type: "reference",
+        to: [{ type: "grapeVariety" }]
+      }],
       validation: (e) => e.required(),
+      options: {
+        layout: 'tags'
+      }
     }),
     defineField({
       type: "reference",
@@ -63,6 +76,6 @@ export const wineType = defineType({
       type: 'slug',
       options: {source: 'name'},
       validation: (rule) => rule.required(),
-    }),
+    })
   ],
 });

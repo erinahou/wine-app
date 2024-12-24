@@ -1,3 +1,5 @@
+import { displayWineColor } from '../utils/wineColor';
+
 export default function WineBottle(props) {
   return(
     <>
@@ -5,7 +7,7 @@ export default function WineBottle(props) {
         key={props.name}
         className="wine-bottle text-xs"
         style={{
-          background: props.variety === "White" ? "var(--white-wine)" : "var(--red-wine)"
+          background: displayWineColor(props.variety)
         }}
       >
         <div className="stock">

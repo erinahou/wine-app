@@ -1,5 +1,6 @@
 import { NavLink } from "@remix-run/react";
 import WineBottle from './WineBottle';
+import { getWineColor } from '../utils/wineColor';
 
 export default function WineList(wineList) {
   return wineList.map(wine => (
@@ -11,7 +12,7 @@ export default function WineList(wineList) {
       <WineBottle
         name={wine.name}
         stock={wine.stock}
-        variety={wine.variety.type}
+        variety={getWineColor(wine)}
       />
     </NavLink>
   ))
