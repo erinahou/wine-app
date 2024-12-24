@@ -34,7 +34,7 @@ const WINES_QUERY = `
   *[_type == "wine"]{
     name,
     stock,
-    variety->{
+    "varieties": varieties[]->{
       name,
       type
     },
@@ -82,7 +82,7 @@ export default function App() {
   });
 
   const filteredWines = wines.filter(wine => {
-    return (!filters.type || wine.variety.type === filters.type) &&
+    return (!filters.type || wine.varieties.some(variety => variety.type === filters.type)) &&
     (!filters.country || wine.region.country.country === filters.country)
   })
 

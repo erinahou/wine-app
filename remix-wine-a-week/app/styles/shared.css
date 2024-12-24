@@ -5,8 +5,11 @@
 */
 
 :root {
-  --red-wine: radial-gradient(50% 50% at 50% 50%, #D1A6E6 0%, #FFD8BF 51%, rgba(255, 216, 191, 0.00) 96%);
-  --white-wine: radial-gradient(50% 50% at 50% 50%, #C7E6A6 0%, #EFFF89 51%, rgba(236, 255, 95, 0.00) 96%);
+  --red: radial-gradient(50% 50% at 50% 50%, #D1A6E6 0%, #FFD8BF 51%, rgba(255, 216, 191, 0.00) 96%);
+  --white: radial-gradient(50% 50% at 50% 50%, #C7E6A6 0%, #EFFF89 51%, rgba(236, 255, 95, 0.00) 96%);
+  --rose: radial-gradient(50% 50% at 50% 50%, #f5dac4 0%, #f9def4 51%, rgba(248, 183, 121, 0) 96%);
+  --blend-white: radial-gradient(50% 50% at 50% 50%, #e7f65e 0%, #b6fd86 51%, rgba(248, 183, 121, 0) 96%);
+  --blend-red: radial-gradient(50% 50% at 50% 50%, #f714f3 0%, #f9def4 51%, rgba(248, 183, 121, 0) 96%);
 }
 
 /*

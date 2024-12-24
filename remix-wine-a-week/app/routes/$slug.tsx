@@ -8,15 +8,14 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 
 //Local components
 import WineDescLineItem from '../components/WineDescLineItem'
-import WineBottle from '../components/WineBottle';
-import renderWineList from '../components/WineList';
+import { getWineColor,displayWineColor } from '~/utils/wineColor';
 
 const WINE_QUERY = `
 *[_type == "wine" && slug.current == $slug][0]{
     name,
     stock,
     vintage,
-    variety->{
+    "varieties": varieties[]->{
       name,
       type
     },
@@ -41,17 +40,13 @@ export async function loader({ params }: LoaderFunctionArgs) {
 export default function WineDetailPage() {
   const { wine } = useLoaderData<typeof loader>();
   const [open, setOpen] = useState(true);
+  const varietyColor = getWineColor(wine);
 
   function getYear(vintage) {
     const year = new Date(vintage).getFullYear();
 
     return year
   }
-
-  function backgroundColorOfDrawer(wine) {
-    return wine.variety.type === 'Red' ? 'var(--red-wine)' : 'var(--white-wine)'
-  }
-
 
   return (
     <Dialog open={open} onClose={setOpen} className="relative z-10">
@@ -84,15 +79,10 @@ export default function WineDetailPage() {
               <div
                 className="flex h-full flex-col overflow-y-scroll p-16 shadow-xl"
                 style={{
-                  background: backgroundColorOfDrawer(wine),
+                  background: displayWineColor(varietyColor),
                   backgroundColor: "white"
                 }}
               >
-                {/* <div className="px-4 sm:px-6">
-                  <DialogTitle className="text-base font-semibold text-gray-900">
-                    {wine.name ? wine.name : "No name"}
-                  </DialogTitle>
-                </div> */}
                 <div
                   className="flex"
                 >
@@ -121,15 +111,22 @@ export default function WineDetailPage() {
                     value={wine.vintage ? getYear(wine.vintage) : "No vintage specified"}
                   />
 
-                  <WineDescLineItem
-                    label="Variety"
-                    value={wine.variety.name ? wine.variety.name : "No region specified"}
-                  />
+                  <div className="flex border-b border-black pt-2 pb-6">
+                    <p className="uppercase flex-1">Variety</p>
+                    {wine.varieties.map((variety, index) => (
+                      <p className="flex-1" key={index}>
+                        {variety.name || "no variety specified"}
+                        {index < wine.varieties.length - 1 ? ", " : ""}
+                      </p>
+                    ))}
+                  </div>
 
-                  <WineDescLineItem
-                    label="Red / White"
-                    value={wine.variety.type ? wine.variety.type : "No region specified"}
-                  />
+                  <div className="flex border-b border-black pt-2 pb-6">
+                    <p className="uppercase flex-1">Red / White</p>
+                    <p className="flex-1">
+                      {varietyColor}
+                    </p>
+                  </div>
 
                   <WineDescLineItem
                     label="Notes"
